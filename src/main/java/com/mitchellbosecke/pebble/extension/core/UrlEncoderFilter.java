@@ -27,7 +27,7 @@ public class UrlEncoderFilter implements Filter {
         if (input == null) {
             return null;
         }
-        String arg = input instanceof RawString ? input.toString() : (String) input;
+        String arg = input instanceof RawString ? ((RawString) input).rawString() : (String) input;
         try {
             arg = URLEncoder.encode(arg, "UTF-8");
         } catch (UnsupportedEncodingException e) {

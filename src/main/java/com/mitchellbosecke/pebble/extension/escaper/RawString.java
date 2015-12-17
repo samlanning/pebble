@@ -9,15 +9,19 @@ package com.mitchellbosecke.pebble.extension.escaper;
  */
 public class RawString {
 
-	private final String content;
+    private final String content;
 
-	public RawString(String content) {
-		this.content = content;
-	}
+    public RawString(String content) {
+        this.content = content;
+    }
 
-	@Override
-	public String toString() {
-		return content;
-	}
+    @Override
+    public String toString() {
+        return "{RawString: " + content + "}";
+    }
+
+    public String rawString() {
+        return content;
+    }
 
 }

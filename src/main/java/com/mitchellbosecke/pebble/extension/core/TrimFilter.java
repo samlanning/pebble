@@ -26,7 +26,7 @@ public class TrimFilter implements Filter {
         if (input == null) {
             return null;
         }
-        String str = input instanceof RawString ? input.toString() : (String) input;
+        String str = input instanceof RawString ? ((RawString) input).rawString() : (String) input;
         return str.trim();
     }
 

@@ -11,10 +11,10 @@ package com.mitchellbosecke.pebble.node;
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.extension.NodeVisitor;
+import com.mitchellbosecke.pebble.extension.escaper.RawString;
 import com.mitchellbosecke.pebble.node.expression.Expression;
 import com.mitchellbosecke.pebble.template.EvaluationContext;
 import com.mitchellbosecke.pebble.template.PebbleTemplateImpl;
@@ -35,6 +35,9 @@ public class PrintNode extends AbstractRenderableNode {
         if (var != null) {
             if (var instanceof BigDecimal) {
                 writer.write(((BigDecimal) var).toPlainString());
+            }
+            else if (var instanceof RawString) {
+                writer.write(((RawString) var).rawString());
             }
             else {
                 writer.write(var.toString());

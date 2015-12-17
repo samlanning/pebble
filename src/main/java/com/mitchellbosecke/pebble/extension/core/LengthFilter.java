@@ -22,7 +22,7 @@ public class LengthFilter implements Filter {
             return 0;
         }
         if (input instanceof RawString) {
-            return input.toString().length();
+            return ((RawString) input).rawString().length();
         } else if (input instanceof String) {
             return ((String) input).length();
         } else if (input instanceof Collection) {

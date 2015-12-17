@@ -26,7 +26,7 @@ public class TitleFilter implements Filter {
         if (input == null) {
             return null;
         }
-        String value = input instanceof RawString ? input.toString() : (String) input;
+        String value = input instanceof RawString ? ((RawString) input).rawString() : (String) input;
 
         if (value.length() == 0) {
             return value;
