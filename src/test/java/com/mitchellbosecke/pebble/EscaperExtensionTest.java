@@ -247,6 +247,38 @@ public class EscaperExtensionTest extends AbstractTest {
         assertEquals("<br/>", writer.toString());
     }
     
+    @Test
+    public void testRawStringConcatenation() throws PebbleException, IOException {
+        PebbleEngine pebble = new PebbleEngine.Builder().loader(new StringLoader()).strictVariables(false).build();
+        PebbleTemplate template = pebble.getTemplate("{{ test() + \"<br/>\" }}{% macro test() %}<br/>{% endmacro %}");
+        Map<String, Object> context = new HashMap<>();
+        Writer writer = new StringWriter();
+        template.evaluate(writer, context);
+        assertEquals("{RawString: &lt;br/&gt;}&lt;br/&gt;", writer.toString());
+    }
+
+    @Test
+    public void testUnwrapRawStringConcatenation() throws PebbleException, IOException {
+        PebbleEngine pebble = new PebbleEngine.Builder().loader(new StringLoader()).strictVariables(false).build();
+        PebbleTemplate template =
+                pebble.getTemplate("{{ test() | unwrap_raw + \"<br/>\" }}{% macro test() %}<br/>{% endmacro %}");
+        Map<String, Object> context = new HashMap<>();
+        Writer writer = new StringWriter();
+        template.evaluate(writer, context);
+        assertEquals("&lt;br/&gt;&lt;br/&gt;", writer.toString());
+    }
+
+    @Test
+    public void testUnwrapRawStringConcatenationRaw() throws PebbleException, IOException {
+        PebbleEngine pebble = new PebbleEngine.Builder().loader(new StringLoader()).strictVariables(false).build();
+        PebbleTemplate template =
+                pebble.getTemplate("{{ (test() | unwrap_raw + \"<br/>\") | raw }}{% macro test() %}<br/>{% endmacro %}");
+        Map<String, Object> context = new HashMap<>();
+        Writer writer = new StringWriter();
+        template.evaluate(writer, context);
+        assertEquals("<br/><br/>", writer.toString());
+    }
+
     public static class TestExtension extends AbstractExtension {
 
 		@Override

@@ -35,6 +35,7 @@ public class EscaperExtension extends AbstractExtension {
         Map<String, Filter> filters = new HashMap<>();
         filters.put("escape", filter);
         filters.put("raw", new RawFilter());
+        filters.put("unwrap_raw", new UnwrapRawFilter());
         return filters;
     }
 
